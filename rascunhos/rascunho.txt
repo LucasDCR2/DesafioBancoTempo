@@ -1,0 +1,60 @@
+// javac -cp "lib/mysql-connector-java-8.0.28.jar;src" src/*.java
+// java -cp "lib/mysql-connector-java-8.0.28.jar;src" App
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Connector {
+    public static void main(String[] args) {
+        // Configurações de conexão com o banco de dados
+        String jdbcUrl = "jdbc:mysql://localhost:3306/gerenciador";
+        String username = "root";
+        String password = "implyroot2882";
+
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
+            // Criação da tabela
+            String createTableQuery = "CREATE TABLE tarefas ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "descricao VARCHAR(255),"
+                    + "data_previsao DATE,"
+                    + "concluida BOOLEAN"
+                    + ")";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(createTableQuery);
+            System.out.println("Tabela 'tarefas' criada com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// javac -cp "lib/mysql-connector-java-8.0.28.jar;src" src/*.java
+// java -cp "lib/mysql-connector-java-8.0.28.jar;src" App
+
+
+
+public void droparBancoDados() {
+        try {
+            String dropQuery = "DROP DATABASE IF EXISTS gerenciador";
+            PreparedStatement dropStatement = connection.prepareStatement(dropQuery);
+            dropStatement.executeUpdate();
+
+            System.out.println("Banco de dados 'gerenciador' dropado com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void criarBancoDados() {
+        try {
+            String createQuery = "CREATE DATABASE IF NOT EXISTS gerenciador";
+            PreparedStatement createStatement = connection.prepareStatement(createQuery);
+            createStatement.executeUpdate();
+
+            System.out.println("Banco de dados 'gerenciador' criado com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
